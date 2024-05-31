@@ -6,7 +6,15 @@
         xmlns:local="clr-namespace:sticky_notes"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+        
+    
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
 
+        <Button Name="topbutton" Grid.Row="0" >{Binding Path=Name}</Button>
+        <Button Name="bottombutton" Grid.Row="1" >{Binding Path=Name}</Button>
     </Grid>
 </Window>
