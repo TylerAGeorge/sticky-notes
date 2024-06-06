@@ -19,3 +19,5 @@ C:\Personal Projects\MyPersonalCompressor\sticky-notes\obj\Debug\net6.0-windows\
 C:\Personal Projects\MyPersonalCompressor\sticky-notes\obj\Debug\net6.0-windows\sticky-notes.pdb
 C:\Personal Projects\MyPersonalCompressor\sticky-notes\obj\Debug\net6.0-windows\sticky-notes.genruntimeconfig.cache
 C:\Personal Projects\MyPersonalCompressor\sticky-notes\obj\Debug\net6.0-windows\ref\sticky-notes.dll
+C:\Personal Projects\MyPersonalCompressor\sticky-notes\obj\Debug\net6.0-windows\ChildWindow.g.cs
+C:\Personal Projects\MyPersonalCompressor\sticky-notes\obj\Debug\net6.0-windows\ChildWindow.baml

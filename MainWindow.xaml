@@ -14,7 +14,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <Button Name="topbutton" Grid.Row="0" >{Binding Path=Name}</Button>
+        <Button Name="topbutton" Grid.Row="0" Click="NewNote">{Binding Path=Name}</Button>
         <Button Name="bottombutton" Grid.Row="1" >{Binding Path=Name}</Button>
     </Grid>
 </Window>
