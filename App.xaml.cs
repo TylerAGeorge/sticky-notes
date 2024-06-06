@@ -13,10 +13,6 @@ namespace sticky_notes
     /// </summary>
     public partial class App : Application
     {
-        private void Application_Startup(object sender, StartupEventArgs e)
-        {
-            MainWindow w1 = new MainWindow();
-            w1.ShowDialog();
-        }
+        
     }
 }
