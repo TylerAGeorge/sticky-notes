@@ -13,5 +13,6 @@ namespace sticky_notes
     /// </summary>
     public partial class App : Application
     {
+        
     }
 }
