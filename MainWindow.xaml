@@ -21,12 +21,12 @@
         
         <Menu Grid.Row="0" Grid.Column="0">
             <MenuItem Header="File">
-                <MenuItem Header="Open..."  InputGestureText="Ctrl+o" Click="OpenFile" />
-                <MenuItem Header="Save"  InputGestureText="Ctrl+s" Click="SaveFile" />
-                <MenuItem Header="SaveAs..."   InputGestureText="Ctrl+Shft+s" Click="SaveAsFile" />
+                <MenuItem Header="Open..."  InputGestureText="Ctrl+O" Click="OpenFile" />
+                <MenuItem Header="Save"  InputGestureText="Ctrl+S" Click="SaveFile" />
+                <MenuItem Header="SaveAs..."   InputGestureText="Ctrl+Shft+S" Click="SaveAsFile" />
             </MenuItem>
         </Menu>
 
-        <Button Name="bottombutton" Grid.Row="1" >{Binding Path=x:Name}</Button>
+        <TextBox Name="TestTextBox" Grid.Row="1" Grid.Column="0" />
     </Grid>
 </Window>

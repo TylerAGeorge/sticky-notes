@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,27 +22,72 @@ namespace sticky_notes
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         public MainWindow()
         {
             InitializeComponent();
+            OpenedFile = null;
         }
+
+        public string? OpenedFile
+        { get; private set; }
 
         public void OpenFile(object sender, RoutedEventArgs e)
         {
-            ChildWindow w = new ChildWindow();
-            w.ShowDialog();
+            var openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.Filter = "Sticky Note Files (*.skn)|*.skn";
+
+            bool? result = openFileDialog.ShowDialog();
+
+            if(result == true)
+            {
+                OpenedFile = openFileDialog.FileName;
+                ActuallyOpenFile();
+            }
+        }
+
+        private void ActuallyOpenFile()
+        {
+            using (StreamReader oldStickyNote = File.OpenText(OpenedFile))
+            {
+                TestTextBox.Text = oldStickyNote.ReadToEnd();
+            }
         }
         
         public void SaveFile(object sender, RoutedEventArgs e)
         {
-            ChildWindow w = new ChildWindow();
-            w.Show();
+            if(OpenedFile == null)
+            {
+                SaveAsFile(null, null);
+            } else
+            {
+                using(var writer = new StreamWriter(OpenedFile))
+                {
+                    writer.Write(TestTextBox.Text);
+                }
+            }
         }
 
-        public void SaveAsFile(object sender, RoutedEventArgs e)
+        public void SaveAsFile(object? sender, RoutedEventArgs? e)
         {
-            ChildWindow w = new ChildWindow();
-            w.ShowDialog();
+            var saveAsFileDialog = new Microsoft.Win32.SaveFileDialog();
+            saveAsFileDialog.Filter = "Sticky Note Files (*.skn)|*.skn";
+
+            bool? result = saveAsFileDialog.ShowDialog();
+
+            if(result == true)
+            {
+                OpenedFile = saveAsFileDialog.FileName;
+                ActuallySaveFile();
+            }
+        }
+
+        private void ActuallySaveFile()
+        {
+            using(var writer = new StreamWriter(OpenedFile, false))
+            {
+                writer.Write(TestTextBox.Text);
+            }
         }
 
         private void NewNote(object sender, RoutedEventArgs e)

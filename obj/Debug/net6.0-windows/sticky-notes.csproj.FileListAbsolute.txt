@@ -3,7 +3,6 @@ C:\Personal Projects\MyPersonalCompressor\sticky-notes\bin\Debug\net6.0-windows\
 C:\Personal Projects\MyPersonalCompressor\sticky-notes\bin\Debug\net6.0-windows\sticky-notes.runtimeconfig.json
 C:\Personal Projects\MyPersonalCompressor\sticky-notes\bin\Debug\net6.0-windows\sticky-notes.dll
 C:\Personal Projects\MyPersonalCompressor\sticky-notes\bin\Debug\net6.0-windows\sticky-notes.pdb
-C:\Personal Projects\MyPersonalCompressor\sticky-notes\obj\Debug\net6.0-windows\sticky-notes.csproj.AssemblyReference.cache
 C:\Personal Projects\MyPersonalCompressor\sticky-notes\obj\Debug\net6.0-windows\MainWindow.g.cs
 C:\Personal Projects\MyPersonalCompressor\sticky-notes\obj\Debug\net6.0-windows\App.g.cs
 C:\Personal Projects\MyPersonalCompressor\sticky-notes\obj\Debug\net6.0-windows\sticky-notes_MarkupCompile.cache
@@ -21,3 +20,4 @@ C:\Personal Projects\MyPersonalCompressor\sticky-notes\obj\Debug\net6.0-windows\
 C:\Personal Projects\MyPersonalCompressor\sticky-notes\obj\Debug\net6.0-windows\ref\sticky-notes.dll
 C:\Personal Projects\MyPersonalCompressor\sticky-notes\obj\Debug\net6.0-windows\ChildWindow.g.cs
 C:\Personal Projects\MyPersonalCompressor\sticky-notes\obj\Debug\net6.0-windows\ChildWindow.baml
+C:\Personal Projects\MyPersonalCompressor\sticky-notes\obj\Debug\net6.0-windows\sticky-notes.sourcelink.json
