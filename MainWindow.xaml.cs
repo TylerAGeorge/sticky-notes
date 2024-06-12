@@ -35,7 +35,7 @@ namespace sticky_notes
         public void SaveFile(object sender, RoutedEventArgs e)
         {
             ChildWindow w = new ChildWindow();
-            w.ShowDialog();
+            w.Show();
         }
 
         public void SaveAsFile(object sender, RoutedEventArgs e)

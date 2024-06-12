@@ -18,13 +18,15 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="0">
-            <Menu Name="File">
-                <MenuItem Header="Open..." Command="ApplicationCommands.Open" Click="OpenFile" />
-                <MenuItem Header="Save" Command="ApplicationCommands.Save" Click="SaveFile" />
-                <MenuItem Header="SaveAs..."  Click="SaveAsFile" />
-            </Menu>
-        </StackPanel>
+        
+        <Menu Grid.Row="0" Grid.Column="0">
+            <MenuItem Header="File">
+                <MenuItem Header="Open..."  InputGestureText="Ctrl+o" Click="OpenFile" />
+                <MenuItem Header="Save"  InputGestureText="Ctrl+s" Click="SaveFile" />
+                <MenuItem Header="SaveAs..."   InputGestureText="Ctrl+Shft+s" Click="SaveAsFile" />
+            </MenuItem>
+        </Menu>
+
         <Button Name="bottombutton" Grid.Row="1" >{Binding Path=x:Name}</Button>
     </Grid>
 </Window>
