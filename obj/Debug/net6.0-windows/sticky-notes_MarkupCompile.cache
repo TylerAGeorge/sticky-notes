@@ -1,20 +1,20 @@
 ﻿sticky-notes
-
+1.0.0.0
 
 winexe
 C#
 .cs
-C:\Personal Projects\MyPersonalCompressor\sticky-notes\obj\Debug\net6.0-windows\
+c:\Personal Projects\MyPersonalCompressor\sticky-notes\obj\Debug\net6.0-windows\
 sticky_notes
 none
 false
-TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-C:\Personal Projects\MyPersonalCompressor\sticky-notes\App.xaml
+TRACE;DEBUG;NET;NET6_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
+c:\Personal Projects\MyPersonalCompressor\sticky-notes\App.xaml
 2944790498
 
-4-687871236
+61334685295
 1941905061893
 ChildWindow.xaml;MainWindow.xaml;
 
-False
+True
 

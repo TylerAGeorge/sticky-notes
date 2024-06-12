@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Markup;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -23,6 +24,24 @@ namespace sticky_notes
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        public void OpenFile(object sender, RoutedEventArgs e)
+        {
+            ChildWindow w = new ChildWindow();
+            w.ShowDialog();
+        }
+        
+        public void SaveFile(object sender, RoutedEventArgs e)
+        {
+            ChildWindow w = new ChildWindow();
+            w.ShowDialog();
+        }
+
+        public void SaveAsFile(object sender, RoutedEventArgs e)
+        {
+            ChildWindow w = new ChildWindow();
+            w.ShowDialog();
         }
 
         private void NewNote(object sender, RoutedEventArgs e)
