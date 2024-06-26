@@ -23,14 +23,15 @@ namespace sticky_notes
     public partial class MainWindow : Window
     {
         
+        public string? OpenedFile
+        { get; private set; }
         public MainWindow()
         {
             InitializeComponent();
             OpenedFile = null;
+            
         }
 
-        public string? OpenedFile
-        { get; private set; }
 
         public void OpenFile(object sender, RoutedEventArgs e)
         {
