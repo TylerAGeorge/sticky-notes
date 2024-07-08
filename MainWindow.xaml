@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:sticky_notes"
         mc:Ignorable="d"
-        Title="StickyNotes" Height="450" Width="800">
+        Title="StickyNotes" Height="450" Width="800" KeyDown="CheckKeyStrokes">
         
     
     <Grid>
@@ -19,14 +19,14 @@
         </Grid.RowDefinitions>
 
         
-        <Menu Name="MainMenu" Grid.Row="0" Grid.Column="0" KeyDown="CheckKeyStrokes">
+        <Menu Name="MainMenu" Grid.Row="0" Grid.Column="0" >
             <MenuItem Header="File">
-                <MenuItem Header="Open..."  InputGestureText="Ctrl+O" Click="OpenFile" KeyDown="CheckKeyStrokes"/>
-                <MenuItem Header="Save"  InputGestureText="Ctrl+S" Click="SaveFile" KeyDown="CheckKeyStrokes"/>
-                <MenuItem Header="SaveAs..."   InputGestureText="Ctrl+Shft+S" Click="SaveAsFile" KeyDown="CheckKeyStrokes"/>
+                <MenuItem Header="Open..."  InputGestureText="Ctrl+O" Click="OpenFile" />
+                <MenuItem Header="Save"  InputGestureText="Ctrl+S" Click="SaveFile" />
+                <MenuItem Header="SaveAs..."   InputGestureText="Ctrl+Shft+S" Click="SaveAsFile" />
             </MenuItem>
         </Menu>
 
-        <TextBox Name="TestTextBox" Grid.Row="1" Grid.Column="0" KeyDown="CheckKeyStrokes"/>
+        <TextBox Name="TestTextBox" Grid.Row="1" Grid.Column="0" />
     </Grid>
 </Window>
