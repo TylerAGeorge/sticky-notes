@@ -19,14 +19,14 @@
         </Grid.RowDefinitions>
 
         
-        <Menu Name="MainMenu" Grid.Row="0" Grid.Column="0">
+        <Menu Name="MainMenu" Grid.Row="0" Grid.Column="0" KeyDown="CheckKeyStrokes">
             <MenuItem Header="File">
-                <MenuItem Header="Open..."  InputGestureText="Ctrl+O" Click="OpenFile" />
-                <MenuItem Header="Save"  InputGestureText="Ctrl+S" Click="SaveFile" />
-                <MenuItem Header="SaveAs..."   InputGestureText="Ctrl+Shft+S" Click="SaveAsFile" />
+                <MenuItem Header="Open..."  InputGestureText="Ctrl+O" Click="OpenFile" KeyDown="CheckKeyStrokes"/>
+                <MenuItem Header="Save"  InputGestureText="Ctrl+S" Click="SaveFile" KeyDown="CheckKeyStrokes"/>
+                <MenuItem Header="SaveAs..."   InputGestureText="Ctrl+Shft+S" Click="SaveAsFile" KeyDown="CheckKeyStrokes"/>
             </MenuItem>
         </Menu>
 
-        <TextBox Name="TestTextBox" Grid.Row="1" Grid.Column="0" />
+        <TextBox Name="TestTextBox" Grid.Row="1" Grid.Column="0" KeyDown="CheckKeyStrokes"/>
     </Grid>
 </Window>

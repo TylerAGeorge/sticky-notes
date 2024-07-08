@@ -29,11 +29,34 @@ namespace sticky_notes
         {
             InitializeComponent();
             OpenedFile = null;
-            
         }
 
-
+        public void CheckKeyStrokes(object sender, KeyEventArgs e)
+        {
+            if(((Keyboard.GetKeyStates(Key.LeftCtrl) & KeyStates.Down) > 0) || ((Keyboard.GetKeyStates(Key.RightCtrl) & KeyStates.Down) > 0))
+            {
+                
+                if((Keyboard.GetKeyStates(Key.O) & KeyStates.Down) > 0)
+                {
+                    ActuallyOpenFile();
+                } else if((Keyboard.GetKeyStates(Key.S) & KeyStates.Down) > 0)
+                {
+                    if((Keyboard.GetKeyStates(Key.LeftShift) & KeyStates.Down) > 0 || (Keyboard.GetKeyStates(Key.RightShift) & KeyStates.Down) > 0 )
+                    {
+                        SaveAsFile(null, null);
+                    } else{
+                        SaveFile(null, null);
+                    }
+                } 
+            }
+        }
         public void OpenFile(object sender, RoutedEventArgs e)
+        {
+            ActuallyOpenFile();
+        }
+
+        
+        private void ActuallyOpenFile()
         {
             var openFileDialog = new Microsoft.Win32.OpenFileDialog();
             openFileDialog.Filter = "Sticky Note Files (*.skn)|*.skn";
@@ -43,16 +66,11 @@ namespace sticky_notes
             if(result == true)
             {
                 OpenedFile = openFileDialog.FileName;
-                ActuallyOpenFile();
-            }
-        }
-
-        private void ActuallyOpenFile()
-        {
-            using (StreamReader oldStickyNote = File.OpenText(OpenedFile))
-            {
-                TestTextBox.Text = oldStickyNote.ReadToEnd();
-            }
+                using (StreamReader oldStickyNote = File.OpenText(OpenedFile))
+                {
+                    TestTextBox.Text = oldStickyNote.ReadToEnd();
+                }
+            } 
         }
         
         public void SaveFile(object sender, RoutedEventArgs e)
