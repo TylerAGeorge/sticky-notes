@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Personal Projects\MyPersonalCompressor\sticky-notes\App.xaml
-2944790498
+21806263596
 
-4-687871236
+4-1658157077
 194750953030
-ChildWindow.xaml;MainWindow.xaml;
+MainWindow.xaml;NewNoteDialog.xaml;
 
 False
 

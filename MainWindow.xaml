@@ -6,27 +6,36 @@
         xmlns:local="clr-namespace:sticky_notes"
         mc:Ignorable="d"
         Title="StickyNotes" Height="450" Width="800" KeyDown="CheckKeyStrokes">
-        
     
+    <Window.Resources>
+        <Style TargetType="{x:Type MenuItem}">    
+            <Setter Property="Background" Value="White" />
+            <Setter Property="BorderBrush" Value="LightGray" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+    </Window.Resources>
+ 
     <Grid>
         
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="25" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
         
-        <Menu Name="MainMenu" Grid.Row="0" Grid.Column="0" >
-            <MenuItem Header="File">
+        <Menu Name="MainMenu" Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Background="White">
+            <MenuItem Header="File" Height="25">
                 <MenuItem Header="Open..."  InputGestureText="Ctrl+O" Click="OpenFile" />
                 <MenuItem Header="Save"  InputGestureText="Ctrl+S" Click="SaveFile" />
                 <MenuItem Header="SaveAs..."   InputGestureText="Ctrl+Shft+S" Click="SaveAsFile" />
             </MenuItem>
+            <MenuItem Name="NewNoteButton" Height="25" Click="NewNote" Header="New Note"  />
         </Menu>
 
-        <TextBox Name="TestTextBox" Grid.Row="1" Grid.Column="0" />
+        <Canvas Grid.Row="1" x:Name="NotesCanvas" Height="Auto" Width="800">
+        </Canvas>
     </Grid>
 </Window>

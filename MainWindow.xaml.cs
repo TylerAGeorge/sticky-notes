@@ -26,7 +26,7 @@ namespace sticky_notes
         public string? OpenedFile
         { get; private set; }
         public MainWindow()
-        {
+        { 
             InitializeComponent();
             OpenedFile = null;
         }
@@ -68,12 +68,12 @@ namespace sticky_notes
                 OpenedFile = openFileDialog.FileName;
                 using (StreamReader oldStickyNote = File.OpenText(OpenedFile))
                 {
-                    TestTextBox.Text = oldStickyNote.ReadToEnd();
+                    // TestTextBox.Text = oldStickyNote.ReadToEnd();
                 }
             } 
         }
         
-        public void SaveFile(object sender, RoutedEventArgs e)
+        public void SaveFile(object? sender, RoutedEventArgs? e)
         {
             if(OpenedFile == null)
             {
@@ -82,7 +82,7 @@ namespace sticky_notes
             {
                 using(var writer = new StreamWriter(OpenedFile))
                 {
-                    writer.Write(TestTextBox.Text);
+                    // writer.Write(TestTextBox.Text);
                 }
             }
         }
@@ -105,16 +105,25 @@ namespace sticky_notes
         {
             using(var writer = new StreamWriter(OpenedFile, false))
             {
-                writer.Write(TestTextBox.Text);
+                // writer.Write(TestTextBox.Text);
             }
         }
 
         private void NewNote(object sender, RoutedEventArgs e)
         {
-            ChildWindow w = new ChildWindow();
+            NewNoteDialog w = new NewNoteDialog();
             w.Owner = this;
-            w.ShowDialog();
-
+            bool? success = w.ShowDialog();
+            if(success == true)
+            {
+                Canvas newNote = new Canvas();
+                newNote.Height = 50;
+                newNote.Width = 50;
+                newNote.Background = Brushes.Red;
+                Canvas.SetTop(newNote, 0);
+                Canvas.SetLeft(newNote, 0);
+                NotesCanvas.Children.Add(newNote);
+            }
         }
     }
 }
