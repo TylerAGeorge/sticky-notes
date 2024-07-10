@@ -125,5 +125,18 @@ namespace sticky_notes
                 NotesCanvas.Children.Add(newNote);
             }
         }
+
+        private void CanvasDrop(object sender, DragEventArgs e)
+        {
+            Canvas canvas = sender as Canvas;
+            if(canvas != null)
+            {
+                if(e.Data.GetDataPresent(DataFormats.StringFormat))
+                {
+                    string data = (string)e.Data.GetData(DataFormats.StringFormat);
+                    
+                }
+            }
+        }
     }
 }
