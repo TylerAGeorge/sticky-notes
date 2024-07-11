@@ -35,7 +35,10 @@
             <MenuItem Name="NewNoteButton" Height="25" Click="NewNote" Header="New Note"  />
         </Menu>
 
-        <Canvas Grid.Row="1" x:Name="NotesCanvas" Height="Auto" Width="800">
-        </Canvas>
+        <Canvas Grid.Row="1" 
+        x:Name="NotesCanvas" 
+        Height="Auto" 
+        Width="800" 
+        />
     </Grid>
 </Window>

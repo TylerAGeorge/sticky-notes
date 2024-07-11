@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +15,7 @@ using System.Windows.Markup;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace sticky_notes
 {
@@ -23,6 +25,7 @@ namespace sticky_notes
     public partial class MainWindow : Window
     {
         
+        private Point _lastMousePosition;
         public string? OpenedFile
         { get; private set; }
         public MainWindow()
@@ -116,25 +119,89 @@ namespace sticky_notes
             bool? success = w.ShowDialog();
             if(success == true)
             {
-                Canvas newNote = new Canvas();
-                newNote.Height = 50;
-                newNote.Width = 50;
-                newNote.Background = Brushes.Red;
+                Grid newNote = new Grid();
+                newNote.Height = 150;
+                newNote.Width = 150;
+                newNote.Background = PickBrush();
+                RowDefinition r0 = new RowDefinition();
+                RowDefinition r1 = new RowDefinition();
+                newNote.RowDefinitions.Add(r0);
+                newNote.RowDefinitions.Add(r1);
+                r0.Height = new GridLength(10);
+                r1.Height = new GridLength(newNote.Height-10);
+                newNote.MouseMove += new MouseEventHandler(MoveNote);
+                newNote.MouseDown += new MouseButtonEventHandler(ClickNote);
                 Canvas.SetTop(newNote, 0);
                 Canvas.SetLeft(newNote, 0);
                 NotesCanvas.Children.Add(newNote);
+
+                TextBlock text = new TextBlock();
+                text.Text = w.Text;
+                text.Width = 150;
+                text.Height = newNote.Height - 10;
+                text.TextWrapping = TextWrapping.Wrap;
+                text.TextAlignment = TextAlignment.Center;
+                Grid.SetRow(text, 1);
+                newNote.Children.Add(text);
+
+                Button deleteButton = new Button();
+                deleteButton.Click += new RoutedEventHandler(DeleteNote);
+                deleteButton.Content = "delete";
+                Grid.SetRow(deleteButton, 0);
+                newNote.Children.Add(deleteButton);
             }
         }
 
-        private void CanvasDrop(object sender, DragEventArgs e)
+        private void ClickNote(object sender, MouseEventArgs e)
         {
-            Canvas canvas = sender as Canvas;
-            if(canvas != null)
+            Grid c = sender as Grid;
+            if(c != null)
             {
-                if(e.Data.GetDataPresent(DataFormats.StringFormat))
+                _lastMousePosition = Mouse.GetPosition(NotesCanvas);
+            }
+        }
+        private void MoveNote(object sender, MouseEventArgs e)
+        {
+            Grid c = sender as Grid;
+            if(c != null)
+            {
+                if(Mouse.LeftButton == MouseButtonState.Pressed)
                 {
-                    string data = (string)e.Data.GetData(DataFormats.StringFormat);
-                    
+                    Point p = Mouse.GetPosition(NotesCanvas);
+                    double top = Canvas.GetTop(c);
+                    double left = Canvas.GetLeft(c);
+                    Canvas.SetTop(c, Math.Max(0, top + (p.Y - _lastMousePosition.Y)));
+                    Canvas.SetLeft(c, left + (p.X - _lastMousePosition.X));
+                    _lastMousePosition = p;
+                }
+            }
+        }
+
+        private Brush PickBrush()
+{
+            Brush result = Brushes.Transparent;
+
+            Random rnd = new Random();
+
+            Type brushesType = typeof(Brushes);
+
+            PropertyInfo[] properties = brushesType.GetProperties();
+
+            int random = rnd.Next(properties.Length);
+            result = (Brush)properties[random].GetValue(null, null);
+
+            return result;
+        }
+
+        private void DeleteNote(object sender, RoutedEventArgs e)
+        {
+            Button b = sender as Button;
+            if(b != null)
+            {
+                UIElement note = b.Parent as UIElement;
+                if(note != null)
+                {
+                    NotesCanvas.Children.Remove(note);
                 }
             }
         }
