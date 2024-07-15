@@ -127,7 +127,7 @@ namespace sticky_notes
                 RowDefinition r1 = new RowDefinition();
                 newNote.RowDefinitions.Add(r0);
                 newNote.RowDefinitions.Add(r1);
-                r0.Height = new GridLength(10);
+                r0.Height = new GridLength(15);
                 r1.Height = new GridLength(newNote.Height-10);
                 newNote.MouseMove += new MouseEventHandler(MoveNote);
                 newNote.MouseDown += new MouseButtonEventHandler(ClickNote);
@@ -144,11 +144,24 @@ namespace sticky_notes
                 Grid.SetRow(text, 1);
                 newNote.Children.Add(text);
 
+                Grid topRow = new Grid();
+                ColumnDefinition c0 = new ColumnDefinition();
+                ColumnDefinition c1 = new ColumnDefinition();
+                c1.Width = r0.Height;
+                topRow.ColumnDefinitions.Add(c0);
+                topRow.ColumnDefinitions.Add(c1);
+                Grid.SetRow(topRow, 0);
+                newNote.Children.Add(topRow);
+
                 Button deleteButton = new Button();
                 deleteButton.Click += new RoutedEventHandler(DeleteNote);
-                deleteButton.Content = "delete";
-                Grid.SetRow(deleteButton, 0);
-                newNote.Children.Add(deleteButton);
+                deleteButton.Content = "X";
+                deleteButton.Width = deleteButton.Height;
+                deleteButton.Background = Brushes.DarkRed;
+                deleteButton.FontSize = 9;
+                deleteButton.Foreground = Brushes.White;
+                Grid.SetColumn(deleteButton, 1);
+                topRow.Children.Add(deleteButton);
             }
         }
 
@@ -198,10 +211,15 @@ namespace sticky_notes
             Button b = sender as Button;
             if(b != null)
             {
-                UIElement note = b.Parent as UIElement;
-                if(note != null)
+                FrameworkElement row = b.Parent as FrameworkElement;
+                if(row != null)
                 {
-                    NotesCanvas.Children.Remove(note);
+                    UIElement note = row.Parent as UIElement;
+                    if(note != null)
+                    {
+                        NotesCanvas.Children.Remove(note);
+                    }
+                    
                 }
             }
         }
