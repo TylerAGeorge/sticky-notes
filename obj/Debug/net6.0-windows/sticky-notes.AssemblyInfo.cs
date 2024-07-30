@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("sticky-notes")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8abbbffefdde406d16126a1752401787049a2578")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+40aee8bf7001712efaee13defcbcfce2c0927098")]
 [assembly: System.Reflection.AssemblyProductAttribute("sticky-notes")]
 [assembly: System.Reflection.AssemblyTitleAttribute("sticky-notes")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
