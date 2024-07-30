@@ -6,12 +6,22 @@
         
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="175" />
+            <RowDefinition Height="150" />
+            <RowDefinition Height="25" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <TextBox x:Name="NewNoteTextbox" Grid.Row="0" TextWrapping="Wrap" />
+        
         <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <RadioButton Name="YellowRadio" Height="25" Checked="SelectColor" Background="#FEFF64" Foreground="#FEFF64" />
+            <RadioButton Name="PinkRadio" Height="25" Checked="SelectColor" Background="Pink" Foreground="Pink" />
+            <RadioButton Name="GreenRadio" Height="25" Checked="SelectColor" Background="#64FF68" Foreground="#64FF68" />
+            <RadioButton Name="OrangeRadio" Height="25" Checked="SelectColor" Background="#FF9A32" Foreground="#FF9A32" />
+            <RadioButton Name="BlueRadio" Height="25" Checked="SelectColor" Background="#64C5FF" Foreground="#64C5FF" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
             <Button Name="CancelButton" Content="Cancel" Click="CancelClick" />
             <Button Name="NewButton" Content="CreateNewNote" Click="NewClick" />
         </StackPanel>

@@ -106,9 +106,14 @@ namespace sticky_notes
 
         private void ActuallySaveFile()
         {
-            using(var writer = new StreamWriter(OpenedFile, false))
+            using(StreamWriter writer = new StreamWriter(OpenedFile, false))
             {
-                // writer.Write(TestTextBox.Text);
+                List<UIElement> toBeSaved = new List<UIElement>();
+                foreach(UIElement note in NotesCanvas.Children)
+                {
+                    toBeSaved.Add(note);
+                }
+                DataObject data = new DataObject("UIElementList", toBeSaved);
             }
         }
 
@@ -122,7 +127,7 @@ namespace sticky_notes
                 Grid newNote = new Grid();
                 newNote.Height = 150;
                 newNote.Width = 150;
-                newNote.Background = PickBrush();
+                newNote.Background = w.brushColor;
                 RowDefinition r0 = new RowDefinition();
                 RowDefinition r1 = new RowDefinition();
                 newNote.RowDefinitions.Add(r0);
