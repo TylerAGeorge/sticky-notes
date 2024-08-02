@@ -108,7 +108,6 @@ namespace sticky_notes
         {
             using(StreamWriter writer = new StreamWriter(OpenedFile, false))
             {
-                List<UIElement> toBeSaved = new List<UIElement>();
                 foreach(UIElement note in NotesCanvas.Children)
                 {
                     toBeSaved.Add(note);
@@ -124,49 +123,7 @@ namespace sticky_notes
             bool? success = w.ShowDialog();
             if(success == true)
             {
-                Grid newNote = new Grid();
-                newNote.Height = 150;
-                newNote.Width = 150;
-                newNote.Background = w.brushColor;
-                RowDefinition r0 = new RowDefinition();
-                RowDefinition r1 = new RowDefinition();
-                newNote.RowDefinitions.Add(r0);
-                newNote.RowDefinitions.Add(r1);
-                r0.Height = new GridLength(15);
-                r1.Height = new GridLength(newNote.Height-10);
-                newNote.MouseMove += new MouseEventHandler(MoveNote);
-                newNote.MouseDown += new MouseButtonEventHandler(ClickNote);
-                Canvas.SetTop(newNote, 0);
-                Canvas.SetLeft(newNote, 0);
-                NotesCanvas.Children.Add(newNote);
-
-                TextBlock text = new TextBlock();
-                text.Text = w.Text;
-                text.Width = 150;
-                text.Height = newNote.Height - 10;
-                text.TextWrapping = TextWrapping.Wrap;
-                text.TextAlignment = TextAlignment.Center;
-                Grid.SetRow(text, 1);
-                newNote.Children.Add(text);
-
-                Grid topRow = new Grid();
-                ColumnDefinition c0 = new ColumnDefinition();
-                ColumnDefinition c1 = new ColumnDefinition();
-                c1.Width = r0.Height;
-                topRow.ColumnDefinitions.Add(c0);
-                topRow.ColumnDefinitions.Add(c1);
-                Grid.SetRow(topRow, 0);
-                newNote.Children.Add(topRow);
-
-                Button deleteButton = new Button();
-                deleteButton.Click += new RoutedEventHandler(DeleteNote);
-                deleteButton.Content = "X";
-                deleteButton.Width = deleteButton.Height;
-                deleteButton.Background = Brushes.DarkRed;
-                deleteButton.FontSize = 9;
-                deleteButton.Foreground = Brushes.White;
-                Grid.SetColumn(deleteButton, 1);
-                topRow.Children.Add(deleteButton);
+                AddNote(w.BrushColor, w.Text);
             }
         }
 
@@ -227,6 +184,53 @@ namespace sticky_notes
                     
                 }
             }
+        }
+
+        private void AddNote(Brush b, string s)
+        {
+            Grid newNote = new Grid();
+            newNote.Height = 150;
+            newNote.Width = 150;
+            newNote.Background = b;
+            RowDefinition r0 = new RowDefinition();
+            RowDefinition r1 = new RowDefinition();
+            newNote.RowDefinitions.Add(r0);
+            newNote.RowDefinitions.Add(r1);
+            r0.Height = new GridLength(15);
+            r1.Height = new GridLength(newNote.Height-10);
+            newNote.MouseMove += new MouseEventHandler(MoveNote);
+            newNote.MouseDown += new MouseButtonEventHandler(ClickNote);
+            Canvas.SetTop(newNote, 0);
+            Canvas.SetLeft(newNote, 0);
+            NotesCanvas.Children.Add(newNote);
+
+            TextBlock text = new TextBlock();
+            text.Text = s;
+            text.Width = 150;
+            text.Height = newNote.Height - 10;
+            text.TextWrapping = TextWrapping.Wrap;
+            text.TextAlignment = TextAlignment.Center;
+            Grid.SetRow(text, 1);
+            newNote.Children.Add(text);
+
+            Grid topRow = new Grid();
+            ColumnDefinition c0 = new ColumnDefinition();
+            ColumnDefinition c1 = new ColumnDefinition();
+            c1.Width = r0.Height;
+            topRow.ColumnDefinitions.Add(c0);
+            topRow.ColumnDefinitions.Add(c1);
+            Grid.SetRow(topRow, 0);
+            newNote.Children.Add(topRow);
+
+            Button deleteButton = new Button();
+            deleteButton.Click += new RoutedEventHandler(DeleteNote);
+            deleteButton.Content = "X";
+            deleteButton.Width = deleteButton.Height;
+            deleteButton.Background = Brushes.DarkRed;
+            deleteButton.FontSize = 9;
+            deleteButton.Foreground = Brushes.White;
+            Grid.SetColumn(deleteButton, 1);
+            topRow.Children.Add(deleteButton);
         }
     }
 }

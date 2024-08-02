@@ -20,11 +20,25 @@ namespace sticky_notes
     /// </summary>
     public partial class NewNoteDialog : Window
     {
+
+        private Brush _brushColor;
         public string Text
         { get; private set; }
 
-        public Brush brushColor
-        { get; private set; }
+        public Brush BrushColor
+        { get
+        {
+            if(_brushColor is Brush)
+            {
+                return _brushColor;
+            }else{
+                return new SolidColorBrush(Color.FromRgb(253, 255, 100));
+            }
+        }
+         private set
+         {
+            _brushColor = value;
+         } }
 
         public NewNoteDialog()
         {
@@ -53,19 +67,19 @@ namespace sticky_notes
                 switch (b.Name[0])
                 {
                     case 'Y':
-                        brushColor = new SolidColorBrush(Color.FromRgb(253, 255, 100));
+                        BrushColor = new SolidColorBrush(Color.FromRgb(253, 255, 100));
                         break;
                     case 'P':
-                        brushColor = Brushes.Pink;
+                        BrushColor = Brushes.Pink;
                         break;
                     case 'G':
-                        brushColor = new SolidColorBrush(Color.FromRgb(100, 255, 104));
+                        BrushColor = new SolidColorBrush(Color.FromRgb(100, 255, 104));
                         break;
                     case 'O':
-                        brushColor = new SolidColorBrush(Color.FromRgb(255, 154, 50));
+                        BrushColor = new SolidColorBrush(Color.FromRgb(255, 154, 50));
                         break;
                     case 'B':
-                        brushColor = new SolidColorBrush(Color.FromRgb(100, 197, 255));
+                        BrushColor = new SolidColorBrush(Color.FromRgb(100, 197, 255));
                         break;
                 }
             }
