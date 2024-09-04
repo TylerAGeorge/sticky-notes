@@ -66,12 +66,22 @@ namespace sticky_notes
 
             bool? result = openFileDialog.ShowDialog();
 
-            if(result == true)
+            if(result == true && File.Exists(openFileDialog.FileName))
             {
                 OpenedFile = openFileDialog.FileName;
                 using (StreamReader oldStickyNote = File.OpenText(OpenedFile))
                 {
-                    // TestTextBox.Text = oldStickyNote.ReadToEnd();
+                    string nextNote = "";
+                    char nextChar;
+                    while(!oldStickyNote.EndOfStream)
+                    {
+                        nextChar = (char)oldStickyNote.Read();
+                        if(nextChar == ' ')
+                        {
+                            
+                        }
+                    }
+
                 }
             } 
         }
@@ -80,13 +90,10 @@ namespace sticky_notes
         {
             if(OpenedFile == null)
             {
-                SaveAsFile(null, null);
+                SaveAsFile(sender, e);
             } else
             {
-                using(var writer = new StreamWriter(OpenedFile))
-                {
-                    // writer.Write(TestTextBox.Text);
-                }
+                ActuallySaveFile();
             }
         }
 
@@ -106,13 +113,30 @@ namespace sticky_notes
 
         private void ActuallySaveFile()
         {
-            using(StreamWriter writer = new StreamWriter(OpenedFile, false))
+            if(File.Exists(OpenedFile))
             {
-                foreach(UIElement note in NotesCanvas.Children)
+                using(StreamWriter writer = new StreamWriter(OpenedFile, false))
                 {
-                    toBeSaved.Add(note);
+                    string toBeSaved = "";
+                    foreach(UIElement note in NotesCanvas.Children)
+                    {
+                        Grid next = note as Grid;
+                        if(next != null)
+                        {
+                            string temp = ((SolidColorBrush)next.Background).Color.ToString();
+                            foreach(UIElement child in next.Children)
+                            {
+                                if(child is TextBlock)
+                                {
+                                    temp = temp + " " + ((TextBlock)child).Text;
+                                    break;
+                                }
+                            }
+                            toBeSaved += temp.Length.ToString() + " " + temp;
+                        }
+                    }
+                    writer.Write(toBeSaved);
                 }
-                DataObject data = new DataObject("UIElementList", toBeSaved);
             }
         }
 

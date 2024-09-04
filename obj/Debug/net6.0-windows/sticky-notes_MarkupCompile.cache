@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Personal Projects\MyPersonalCompressor\sticky-notes\obj\Debug\net6.0-windows\
+C:\Users\tyler\Documents\GitHub\sticky-notes\obj\Debug\net6.0-windows\
 sticky_notes
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-C:\Personal Projects\MyPersonalCompressor\sticky-notes\App.xaml
+C:\Users\tyler\Documents\GitHub\sticky-notes\App.xaml
 21806263596
 
 4-1658157077
-194750953030
+194-428966090
 MainWindow.xaml;NewNoteDialog.xaml;
 
-False
+True
 
