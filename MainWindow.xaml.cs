@@ -174,8 +174,16 @@ namespace sticky_notes
             if(c != null)
             {
                 _lastMousePosition = Mouse.GetPosition(NotesCanvas);
+                int oldZPos = Canvas.GetZIndex(c);
                 Canvas.SetZIndex(c, Canvas.GetZIndex(LastInteractedNote));
-                Canvas.SetZIndex(LastInteractedNote, Canvas.GetZIndex(LastInteractedNote)-1);
+                Canvas.SetZIndex(LastInteractedNote, Canvas.GetZIndex(LastInteractedNote) - 1);
+                foreach ( UIElement child in NotesCanvas.Children )
+                {
+                    if(Canvas.GetZIndex(child) >= oldZPos && child != c)
+                    {
+                        Canvas.SetZIndex(child, Canvas.GetZIndex(child) - 1);
+                    }
+                }
                 LastInteractedNote = c;
             }
         }
@@ -246,6 +254,13 @@ namespace sticky_notes
             newNote.MouseDown += new MouseButtonEventHandler(ClickNote);
             Canvas.SetTop(newNote, top);
             Canvas.SetLeft(newNote, left);
+            try 
+            {
+                Canvas.SetZIndex(newNote, Canvas.GetZIndex(LastInteractedNote) + 1);
+            } catch (System.ArgumentNullException ex)
+            {
+                Canvas.SetZIndex(newNote, 1);
+            }
             NotesCanvas.Children.Add(newNote);
 
             TextBlock text = new TextBlock();
