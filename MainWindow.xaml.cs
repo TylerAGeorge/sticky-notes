@@ -26,8 +26,13 @@ namespace sticky_notes
     {
         
         private Point _lastMousePosition;
+
         public string? OpenedFile
         { get; private set; }
+
+        private UIElement LastInteractedNote
+        { get; set; }
+
         public MainWindow()
         { 
             InitializeComponent();
@@ -65,27 +70,36 @@ namespace sticky_notes
             openFileDialog.Filter = "Sticky Note Files (*.skn)|*.skn";
 
             bool? result = openFileDialog.ShowDialog();
-
+            
             if(result == true && File.Exists(openFileDialog.FileName))
             {
+                NotesCanvas.Children.Clear();
                 OpenedFile = openFileDialog.FileName;
                 using (StreamReader oldStickyNote = File.OpenText(OpenedFile))
                 {
-                    string nextNote = "";
-                    char nextChar;
-                    while(!oldStickyNote.EndOfStream)
+                    string allNotes = oldStickyNote.ReadToEnd();
+                    if(allNotes.Length > 0)
                     {
-                        nextChar = (char)oldStickyNote.Read();
-                        if(nextChar == ' ')
+                        string[] splittedNotes = allNotes.Split("#", allNotes.Length, StringSplitOptions.TrimEntries);
+                        for(int i = 1; i < splittedNotes.Length; i  += 4 )
                         {
-                            
+                            byte[] argb = StringToByteArray(splittedNotes[i]);                            double left, top;
+                            double.TryParse(splittedNotes[i+2], out top);
+                            double.TryParse(splittedNotes[i+1], out left);
+                            AddNote(new SolidColorBrush(System.Windows.Media.Color.FromArgb(argb[0], argb[1], argb[2], argb[3])) , splittedNotes[i+3], left, top);
                         }
                     }
-
                 }
             } 
         }
         
+        public static byte[] StringToByteArray(string hex) 
+        {
+            return Enumerable.Range(0, hex.Length)
+                            .Where(x => x % 2 == 0)
+                            .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
+                            .ToArray();
+        }
         public void SaveFile(object? sender, RoutedEventArgs? e)
         {
             if(OpenedFile == null)
@@ -120,7 +134,7 @@ namespace sticky_notes
                     string toBeSaved = "";
                     foreach(UIElement note in NotesCanvas.Children)
                     {
-                        Grid next = note as Grid;
+                        Grid? next = note as Grid;
                         if(next != null)
                         {
                             string temp = ((SolidColorBrush)next.Background).Color.ToString();
@@ -128,11 +142,14 @@ namespace sticky_notes
                             {
                                 if(child is TextBlock)
                                 {
-                                    temp = temp + " " + ((TextBlock)child).Text;
+                                    double left, top;
+                                    left = Canvas.GetLeft(next);
+                                    top = Canvas.GetTop(next);
+                                    temp = temp +  "#" + left.ToString() + "#" + top.ToString() + "#" + ((TextBlock)child).Text;
                                     break;
                                 }
                             }
-                            toBeSaved += temp.Length.ToString() + " " + temp;
+                            toBeSaved += temp;
                         }
                     }
                     writer.Write(toBeSaved);
@@ -147,21 +164,24 @@ namespace sticky_notes
             bool? success = w.ShowDialog();
             if(success == true)
             {
-                AddNote(w.BrushColor, w.Text);
+                AddNote(w.BrushColor, w.Text.Replace('#', ' '), 0, 0);
             }
         }
 
         private void ClickNote(object sender, MouseEventArgs e)
         {
-            Grid c = sender as Grid;
+            Grid? c = sender as Grid;
             if(c != null)
             {
                 _lastMousePosition = Mouse.GetPosition(NotesCanvas);
+                Canvas.SetZIndex(c, Canvas.GetZIndex(LastInteractedNote));
+                Canvas.SetZIndex(LastInteractedNote, Canvas.GetZIndex(LastInteractedNote)-1);
+                LastInteractedNote = c;
             }
         }
         private void MoveNote(object sender, MouseEventArgs e)
         {
-            Grid c = sender as Grid;
+            Grid? c = sender as Grid;
             if(c != null)
             {
                 if(Mouse.LeftButton == MouseButtonState.Pressed)
@@ -176,31 +196,31 @@ namespace sticky_notes
             }
         }
 
-        private Brush PickBrush()
-{
-            Brush result = Brushes.Transparent;
+//         private Brush PickBrush()
+// {
+//             Brush result = Brushes.Transparent;
 
-            Random rnd = new Random();
+//             Random rnd = new Random();
 
-            Type brushesType = typeof(Brushes);
+//             Type brushesType = typeof(Brushes);
 
-            PropertyInfo[] properties = brushesType.GetProperties();
+//             PropertyInfo[] properties = brushesType.GetProperties();
 
-            int random = rnd.Next(properties.Length);
-            result = (Brush)properties[random].GetValue(null, null);
+//             int random = rnd.Next(properties.Length);
+//             result = (Brush)properties[random].GetValue(null, null);
 
-            return result;
-        }
+//             return result;
+//         }
 
         private void DeleteNote(object sender, RoutedEventArgs e)
         {
-            Button b = sender as Button;
+            Button? b = sender as Button;
             if(b != null)
             {
-                FrameworkElement row = b.Parent as FrameworkElement;
+                FrameworkElement? row = b.Parent as FrameworkElement;
                 if(row != null)
                 {
-                    UIElement note = row.Parent as UIElement;
+                    UIElement? note = row.Parent as UIElement;
                     if(note != null)
                     {
                         NotesCanvas.Children.Remove(note);
@@ -210,7 +230,7 @@ namespace sticky_notes
             }
         }
 
-        private void AddNote(Brush b, string s)
+        private void AddNote(Brush b, string s, double left, double top)
         {
             Grid newNote = new Grid();
             newNote.Height = 150;
@@ -224,8 +244,8 @@ namespace sticky_notes
             r1.Height = new GridLength(newNote.Height-10);
             newNote.MouseMove += new MouseEventHandler(MoveNote);
             newNote.MouseDown += new MouseButtonEventHandler(ClickNote);
-            Canvas.SetTop(newNote, 0);
-            Canvas.SetLeft(newNote, 0);
+            Canvas.SetTop(newNote, top);
+            Canvas.SetLeft(newNote, left);
             NotesCanvas.Children.Add(newNote);
 
             TextBlock text = new TextBlock();
@@ -255,6 +275,8 @@ namespace sticky_notes
             deleteButton.Foreground = Brushes.White;
             Grid.SetColumn(deleteButton, 1);
             topRow.Children.Add(deleteButton);
+
+            LastInteractedNote = newNote;
         }
     }
 }

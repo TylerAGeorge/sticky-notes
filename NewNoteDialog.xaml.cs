@@ -61,7 +61,7 @@ namespace sticky_notes
 
         public void SelectColor(object sender, RoutedEventArgs e)
         {
-            RadioButton b = sender as RadioButton;
+            RadioButton? b = sender as RadioButton;
             if(b != null)
             {
                 switch (b.Name[0])
