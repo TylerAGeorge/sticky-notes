@@ -27,6 +27,20 @@ namespace sticky_notes
         
         private Point _lastMousePosition;
 
+        private UIElement selectedNote = null;
+
+        public SelectedNote
+        {
+            get
+            {
+                return selectedNote;
+            }
+            set
+            {
+                selectedNote = value;
+            }
+        }
+
         public string? OpenedFile
         { get; private set; }
 
