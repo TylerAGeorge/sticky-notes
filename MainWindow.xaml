@@ -24,7 +24,6 @@
             <RowDefinition Height="25" />
             <RowDefinition />
         </Grid.RowDefinitions>
-
         
         <Menu Name="MainMenu" Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Background="White">
             <MenuItem Header="File" Height="25">

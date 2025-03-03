@@ -27,30 +27,16 @@ namespace sticky_notes
         
         private Point _lastMousePosition;
 
-        private UIElement selectedNote = null;
-
-        public SelectedNote
-        {
-            get
-            {
-                return selectedNote;
-            }
-            set
-            {
-                selectedNote = value;
-            }
-        }
-
         public string? OpenedFile
         { get; private set; }
 
-        private UIElement LastInteractedNote
-        { get; set; }
+        private UIElement? LastInteractedNote;
 
         public MainWindow()
         { 
             InitializeComponent();
             OpenedFile = null;
+            LastInteractedNote = null;
         }
 
         public void CheckKeyStrokes(object sender, KeyEventArgs e)
@@ -187,6 +173,7 @@ namespace sticky_notes
             Grid? c = sender as Grid;
             if(c != null)
             {
+                LastInteractedNote = c;
                 _lastMousePosition = Mouse.GetPosition(NotesCanvas);
                 int oldZPos = Canvas.GetZIndex(c);
                 Canvas.SetZIndex(c, Canvas.GetZIndex(LastInteractedNote));
@@ -198,41 +185,47 @@ namespace sticky_notes
                         Canvas.SetZIndex(child, Canvas.GetZIndex(child) - 1);
                     }
                 }
-                LastInteractedNote = c;
             }
         }
-        private void MoveNote(object sender, MouseEventArgs e)
+
+        protected override void OnMouseMove(MouseEventArgs e)
         {
-            Grid? c = sender as Grid;
-            if(c != null)
+            if(LastInteractedNote is Panel)
             {
                 if(Mouse.LeftButton == MouseButtonState.Pressed)
                 {
                     Point p = Mouse.GetPosition(NotesCanvas);
-                    double top = Canvas.GetTop(c);
-                    double left = Canvas.GetLeft(c);
-                    Canvas.SetTop(c, Math.Max(0, top + (p.Y - _lastMousePosition.Y)));
-                    Canvas.SetLeft(c, left + (p.X - _lastMousePosition.X));
+                    double top = Canvas.GetTop(LastInteractedNote);
+                    double left = Canvas.GetLeft(LastInteractedNote);
+                    Canvas.SetTop(LastInteractedNote, Math.Max(0, top + (p.Y - _lastMousePosition.Y)));
+                    Canvas.SetLeft(LastInteractedNote, left + (p.X - _lastMousePosition.X));
                     _lastMousePosition = p;
                 }
             }
         }
 
-//         private Brush PickBrush()
-// {
-//             Brush result = Brushes.Transparent;
 
-//             Random rnd = new Random();
 
-//             Type brushesType = typeof(Brushes);
+        protected override void OnMouseUp(MouseButtonEventArgs e)
+        {
+            LastInteractedNote = null;
+        }
 
-//             PropertyInfo[] properties = brushesType.GetProperties();
+        //         private Brush PickBrush()
+        // {
+        //             Brush result = Brushes.Transparent;
 
-//             int random = rnd.Next(properties.Length);
-//             result = (Brush)properties[random].GetValue(null, null);
+        //             Random rnd = new Random();
 
-//             return result;
-//         }
+        //             Type brushesType = typeof(Brushes);
+
+        //             PropertyInfo[] properties = brushesType.GetProperties();
+
+        //             int random = rnd.Next(properties.Length);
+        //             result = (Brush)properties[random].GetValue(null, null);
+
+        //             return result;
+        //         }
 
         private void DeleteNote(object sender, RoutedEventArgs e)
         {
@@ -264,8 +257,7 @@ namespace sticky_notes
             newNote.RowDefinitions.Add(r1);
             r0.Height = new GridLength(15);
             r1.Height = new GridLength(newNote.Height-10);
-            newNote.MouseMove += new MouseEventHandler(MoveNote);
-            newNote.MouseDown += new MouseButtonEventHandler(ClickNote);
+           newNote.MouseDown += new MouseButtonEventHandler(ClickNote);
             Canvas.SetTop(newNote, top);
             Canvas.SetLeft(newNote, left);
             try 
